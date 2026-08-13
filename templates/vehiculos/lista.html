@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Vehículos registrados{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="h1">Vehículos registrados</div>
+    <p class="muted">
+      Listado de vehículos dados de alta en el sistema.
+    </p>
+
+    <div class="pills">
+      <form method="get" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <input
+          type="text"
+          name="q"
+          placeholder="Buscar por patente o legajo..."
+          value="{{ q|default:'' }}"
+          style="flex:1; min-width:240px;"
+        >
+        <button class="btn btn--ghost" type="submit">Buscar</button>
+
+        {% if q %}
+          <a class="btn btn--ghost" href="{% url 'lista_ingresos' %}">Limpiar</a>
+        {% endif %}
+      </form>
+
+      <span class="pill"><b>Total:</b> {{ vehiculos|length }}</span>
+
+      <span style="flex:1"></span>
+      
+      <a class="btn btn--ok" href="{% url 'imprimir_lista_vehiculos' %}?q={{ q|urlencode }}" target="_blank">
+        🖨️ Imprimir
+      </a>
+      <a class="btn btn--ghost" href="{% url 'inicio' %}">
+        ⬅ Volver al menú
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    {% if vehiculos %}
+      <div style="overflow:auto;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Dominio</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Color</th>
+              <th>Año</th>
+              <th>Fecha alta</th>
+              <th>Área asignada</th>
+              <th colspan="7">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in vehiculos %}
+              <tr>
+                <td style="color: var(--text); font-weight: 800;">
+                  {{ v.dominio }}
+                </td>
+                <td>{{ v.marca|default:"-" }}</td>
+                <td>{{ v.modelo|default:"-" }}</td>
+                <td>{{ v.color|default:"-" }}</td>
+                <td>{{ v.anio|default:"-" }}</td>
+                <td>{{ v.fecha_alta }}</td>
+                <td>{{ v.area_asignada|default:"-" }}</td>
+                <td colspan="7">
+                  <a class="btn btn--ghost" href="{% url 'detalle_vehiculo' v.id %}">Ver detalles</a>
+                  <a class="btn btn--ghost" href="{% url 'editar_vehiculo' v.id %}">Editar</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="muted">No hay vehículos registrados.</p>
+    {% endif %}
+  </div>
+{% endblock %}

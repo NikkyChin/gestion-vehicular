@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Vehículo {{ vehiculo.dominio }}{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="h1">Vehículo {{ vehiculo.dominio }}</div>
+    <p class="muted">Detalle completo del vehículo y su historial.</p>
+
+    <div class="pills">
+      <span class="pill"><b>Dominio:</b> {{ vehiculo.dominio }}</span>
+      {% if vehiculo.marca %}
+        <span class="pill"><b>Marca:</b> {{ vehiculo.marca }}</span>
+      {% endif %}
+      {% if vehiculo.modelo %}
+        <span class="pill"><b>Modelo:</b> {{ vehiculo.modelo }}</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="h2">Datos del vehículo</div>
+
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Marca</th>
+          <td>{{ vehiculo.marca|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>Modelo</th>
+          <td>{{ vehiculo.modelo|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>Color</th>
+          <td>{{ vehiculo.color|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>Año</th>
+          <td>{{ vehiculo.anio|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>N° Chasis</th>
+          <td>{{ vehiculo.nro_chasis|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>N° Motor</th>
+          <td>{{ vehiculo.nro_motor|default:"-" }}</td>
+        </tr>
+        <tr>
+          <th>Alta en sistema</th>
+          <td>{{ vehiculo.fecha_alta }}</td>
+        </tr>
+        <tr>
+          <th>Área asignada</th>
+          <td>{{ vehiculo.area_asignada|default:"-" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <a class="btn btn--ghost" href="{% url 'inicio' %}">
+      ⬅ Volver al inicio
+    </a>
+    <a class="btn btn--ghost" href="{% url 'editar_vehiculo' vehiculo.id %}">
+      ✏️ Editar vehículo
+    </a>
+    <a class="btn btn--ghost" href="{% url 'lista_vehiculos' %}">
+      📋 Ver listado
+    </a>
+  </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar ingreso{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="h1">Registrar ingreso al sistema</div>
+    <p class="muted">Completá los datos del vehículo.</p>
+  </div>
+
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="card form-errors">
+          <b style="color: var(--bad);">Hay errores en el formulario:</b>
+          <div class="muted">{{ form.non_field_errors }}</div>
+        </div>
+      {% endif %}
+
+      <div class="field-grid">
+        {% for field in form %}
+          <div>
+            <div class="field-label">
+              {{ field.label }}
+              {% if field.field.required %}
+                <span class="field-req">*</span>
+              {% endif %}
+            </div>
+
+            {{ field }}
+
+            {% if field.help_text %}
+              <div class="muted" style="font-size:12px; margin-top:6px;">{{ field.help_text }}</div>
+            {% endif %}
+
+            {% if field.errors %}
+              <div class="field-error">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+
+      <hr class="hr">
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn--ok" type="submit">💾 Guardar ingreso</button>
+        <a class="btn btn--ghost" href="{% url 'lista_vehiculos' %}">🚗 Vehículos</a>
+        <a class="btn btn--ghost" href="{% url 'inicio' %}">⬅ Volver al menú</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

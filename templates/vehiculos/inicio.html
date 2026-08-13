@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="h1">Bienvenido al sistema de gestión vehicular</div>
+    <p class="muted" style="margin-top:6px;">
+      Desde aquí podés acceder a las distintas secciones del sistema.
+    </p>
+
+    <div class="pills" style="margin-top:14px;">
+      <a class="btn btn--ok" href="{% url 'lista_vehiculos' %}">
+        🚗 Vehículos registrados
+      </a>
+      <a class="btn btn--ok" href="{% url 'nuevo_vehiculo' %}">
+        ➕ Registrar nuevo vehículo
+      </a>
+    </div>
+  </div>
+{% endblock %}
