@@ -1,41 +1,107 @@
 {% extends "base.html" %}
 
-{% block title %}Acceso restringido{% endblock %}
+{% block title %}Acceso restringido | Gestión Vehicular{% endblock %}
+
+{% block page_section %}
+    Acceso restringido
+{% endblock %}
 
 {% block content %}
-  <div class="card" style="border-color: rgba(255,77,109,.35);">
-    <div class="h1">Acceso restringido</div>
 
-    <p class="muted" style="margin-top:6px;">
-      No tenés permisos para acceder a esta sección del sistema.
-    </p>
+<div class="flex min-h-[60vh] items-center justify-center">
 
-    <div class="pills" style="margin-top:14px;">
-      <span class="pill">
-        <b>Usuario:</b> {{ request.user.username }}
-      </span>
-      <span class="pill">
-        <b>Estado:</b> Sin autorización
-      </span>
+    <div class="w-full max-w-lg">
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+
+            <!-- Icono -->
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-2xl">
+                🔒
+            </div>
+
+
+            <h1 class="mt-5 text-xl font-semibold text-slate-900">
+                Acceso restringido
+            </h1>
+
+
+            <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-500">
+                No tenés permisos suficientes para acceder a esta sección
+                del sistema.
+            </p>
+
+
+            <!-- Usuario -->
+            <div class="mt-6 rounded-xl bg-slate-50 p-4 text-left">
+
+                <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+
+                    <span class="text-xs font-medium uppercase tracking-wider text-slate-500">
+                        Usuario
+                    </span>
+
+                    <span class="text-sm font-medium text-slate-900">
+                        {{ request.user.username }}
+                    </span>
+
+                </div>
+
+
+                <div class="flex items-center justify-between pt-3">
+
+                    <span class="text-xs font-medium uppercase tracking-wider text-slate-500">
+                        Estado
+                    </span>
+
+                    <span class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-700">
+
+                        <span class="h-1.5 w-1.5 rounded-full bg-red-500"></span>
+
+                        Sin autorización
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <p class="mt-5 text-xs leading-5 text-slate-500">
+                Si considerás que deberías tener acceso, comunicate con un
+                administrador del sistema para revisar los permisos asignados.
+            </p>
+
+
+            <!-- Acciones -->
+            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+
+                <a
+                    href="{% url 'inicio' %}"
+                    class="inline-flex justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+
+                    ← Volver al inicio
+
+                </a>
+
+
+                {% if request.user.is_staff %}
+
+                    <a
+                        href="/admin/"
+                        class="inline-flex justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800">
+
+                        🛠️ Administrador
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
     </div>
-  </div>
 
-  <div class="card">
-    <p class="muted">
-      Si creés que deberías tener acceso, comunicate con un administrador del sistema
-      para que revise tu rol o permisos asignados.
-    </p>
+</div>
 
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-      <a class="btn btn--ghost" href="{% url 'home' %}">
-        ⬅ Volver al inicio
-      </a>
-
-      {% if request.user.is_staff %}
-        <a class="btn btn--ghost" href="/admin/">
-          🛠️ Ir al administrador
-        </a>
-      {% endif %}
-    </div>
-  </div>
 {% endblock %}

@@ -1,0 +1,94 @@
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.form-input {
+    width: 100%;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background-color: #f8fafc;
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
+    color: #0f172a;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-input:hover {
+    border-color: #cbd5e1;
+}
+
+.form-input:focus {
+    border-color: #3b82f6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgb(219 234 254);
+}
+
+.form-input--mono {
+    font-family: monospace;
+    letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    border-radius: 0.5rem;
+    background-color: #2563eb;
+
+    padding: 0.625rem 1.25rem;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    color: white;
+
+    text-decoration: none;
+
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+
+    background-color: white;
+
+    padding: 0.625rem 1rem;
+
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    color: #475569;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #f8fafc;
+    color: #0f172a;
+}

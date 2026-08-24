@@ -1,82 +1,298 @@
 {% extends "base.html" %}
 
-{% block title %}Vehículos registrados{% endblock %}
+{% block title %}Vehículos | Gestión Vehicular{% endblock %}
+
+{% block page_section %}
+    Vehículos
+{% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="h1">Vehículos registrados</div>
-    <p class="muted">
-      Listado de vehículos dados de alta en el sistema.
-    </p>
 
-    <div class="pills">
-      <form method="get" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <input
-          type="text"
-          name="q"
-          placeholder="Buscar por patente o legajo..."
-          value="{{ q|default:'' }}"
-          style="flex:1; min-width:240px;"
-        >
-        <button class="btn btn--ghost" type="submit">Buscar</button>
+<div class="space-y-6">
 
-        {% if q %}
-          <a class="btn btn--ghost" href="{% url 'lista_ingresos' %}">Limpiar</a>
-        {% endif %}
-      </form>
+    <!-- Encabezado -->
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-      <span class="pill"><b>Total:</b> {{ vehiculos|length }}</span>
+        <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
+                Vehículos
+            </h1>
 
-      <span style="flex:1"></span>
-      
-      <a class="btn btn--ok" href="{% url 'imprimir_lista_vehiculos' %}?q={{ q|urlencode }}" target="_blank">
-        🖨️ Imprimir
-      </a>
-      <a class="btn btn--ghost" href="{% url 'inicio' %}">
-        ⬅ Volver al menú
-      </a>
+            <p class="mt-1 text-sm text-slate-500">
+                Listado de vehículos dados de alta en el sistema.
+            </p>
+        </div>
+
+        <a href="{% url 'nuevo_vehiculo' %}"
+           class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700">
+
+            <span class="text-lg leading-none">+</span>
+            Nuevo vehículo
+
+        </a>
+
     </div>
-  </div>
 
-  <div class="card">
-    {% if vehiculos %}
-      <div style="overflow:auto;">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Dominio</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Color</th>
-              <th>Año</th>
-              <th>Fecha alta</th>
-              <th>Área asignada</th>
-              <th colspan="7">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for v in vehiculos %}
-              <tr>
-                <td style="color: var(--text); font-weight: 800;">
-                  {{ v.dominio }}
-                </td>
-                <td>{{ v.marca|default:"-" }}</td>
-                <td>{{ v.modelo|default:"-" }}</td>
-                <td>{{ v.color|default:"-" }}</td>
-                <td>{{ v.anio|default:"-" }}</td>
-                <td>{{ v.fecha_alta }}</td>
-                <td>{{ v.area_asignada|default:"-" }}</td>
-                <td colspan="7">
-                  <a class="btn btn--ghost" href="{% url 'detalle_vehiculo' v.id %}">Ver detalles</a>
-                  <a class="btn btn--ghost" href="{% url 'editar_vehiculo' v.id %}">Editar</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    {% else %}
-      <p class="muted">No hay vehículos registrados.</p>
-    {% endif %}
-  </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+
+        <form method="get" class="flex flex-col gap-3 md:flex-row">
+
+            <div class="relative flex-1">
+
+                <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Buscar por patente o legajo..."
+                    value="{{ q|default:'' }}"
+                    class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800">
+
+                Buscar
+
+            </button>
+
+
+            {% if q %}
+
+                <a
+                    href="{% url 'lista_vehiculos' %}"
+                    class="rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-center text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+
+                    Limpiar
+
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- Barra superior de resultados -->
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+        <div class="flex items-center gap-2">
+
+            <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+                {{ vehiculos|length }} vehículos
+            </span>
+
+            {% if q %}
+
+                <span class="text-sm text-slate-500">
+                    Resultado de búsqueda para
+                    <strong class="font-medium text-slate-700">
+                        "{{ q }}"
+                    </strong>
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        <a
+            href="{% url 'imprimir_lista_vehiculos' %}?q={{ q|urlencode }}"
+            class="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm transition hover:bg-slate-50 hover:text-slate-900">
+
+            🖨️ Imprimir listado
+
+        </a>
+
+    </div>
+
+
+    <!-- Tabla -->
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+
+        {% if vehiculos %}
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full text-left">
+
+                    <thead class="border-b border-slate-200 bg-slate-50">
+
+                        <tr>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Dominio
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Marca
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Modelo
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Color
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Año
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Área
+                            </th>
+
+                            <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Acciones
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody class="divide-y divide-slate-100">
+
+                        {% for v in vehiculos %}
+
+                            <tr class="transition hover:bg-slate-50">
+
+                                <!-- Dominio -->
+                                <td class="whitespace-nowrap px-6 py-4">
+
+                                    <span class="rounded-md bg-slate-100 px-2.5 py-1 font-mono text-sm font-semibold text-slate-800">
+                                        {{ v.dominio }}
+                                    </span>
+
+                                </td>
+
+
+                                <!-- Marca -->
+                                <td class="px-6 py-4 text-sm text-slate-700">
+                                    {{ v.marca|default:"-" }}
+                                </td>
+
+
+                                <!-- Modelo -->
+                                <td class="px-6 py-4 text-sm text-slate-700">
+                                    {{ v.modelo|default:"-" }}
+                                </td>
+
+
+                                <!-- Color -->
+                                <td class="px-6 py-4 text-sm text-slate-500">
+                                    {{ v.color|default:"-" }}
+                                </td>
+
+
+                                <!-- Año -->
+                                <td class="px-6 py-4 text-sm text-slate-500">
+                                    {{ v.anio|default:"-" }}
+                                </td>
+
+
+                                <!-- Área -->
+                                <td class="px-6 py-4 text-sm text-slate-600">
+                                    {{ v.area_asignada|default:"-" }}
+                                </td>
+
+
+                                <!-- Acciones -->
+                                <td class="whitespace-nowrap px-6 py-4 text-right">
+
+                                    <div class="flex justify-end gap-2">
+
+                                        <a
+                                            href="{% url 'detalle_vehiculo' v.id %}"
+                                            class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900">
+
+                                            Ver
+
+                                        </a>
+
+                                        <a
+                                            href="{% url 'editar_vehiculo' v.id %}"
+                                            class="rounded-lg px-3 py-2 text-sm font-medium text-blue-600 transition hover:bg-blue-50 hover:text-blue-700">
+
+                                            Editar
+
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <!-- Sin resultados -->
+
+            <div class="px-6 py-16 text-center">
+
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-2xl">
+                    🚙
+                </div>
+
+                <h3 class="mt-4 text-sm font-semibold text-slate-900">
+                    No hay vehículos registrados
+                </h3>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    {% if q %}
+                        No se encontraron vehículos para "{{ q }}".
+                    {% else %}
+                        Todavía no hay vehículos cargados en el sistema.
+                    {% endif %}
+                </p>
+
+                {% if q %}
+
+                    <a
+                        href="{% url 'lista_vehiculos' %}"
+                        class="mt-4 inline-flex rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">
+
+                        Limpiar búsqueda
+
+                    </a>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'nuevo_vehiculo' %}"
+                        class="mt-4 inline-flex rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700">
+
+                        Registrar vehículo
+
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
 {% endblock %}

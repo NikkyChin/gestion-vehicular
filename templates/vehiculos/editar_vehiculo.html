@@ -1,49 +1,159 @@
 {% extends "base.html" %}
-{% block title %}Editar vehículo{% endblock %}
+
+{% block title %}Editar {{ vehiculo.dominio }} | Gestión Vehicular{% endblock %}
+
+{% block page_section %}
+    Vehículos / Editar
+{% endblock %}
 
 {% block content %}
-  <div class="card">
-    <div class="h1">Editar vehículo {{ vehiculo.marca }} - {{ vehiculo.modelo }}</div>
-    <p class="muted">Dominio: <b style="color:var(--text)">{{ vehiculo.dominio }}</b></p>
-  </div>
 
-  <div class="card">
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
+<div class="mx-auto max-w-4xl space-y-6">
 
-      {% if form_vehiculo.non_field_errors %}
-        <div class="card form-errors">
-          <b style="color: var(--bad);">Hay errores en el formulario:</b>
-          <div class="muted">
-            {{ form_vehiculo.non_field_errors }}
-          </div>
+    <!-- Encabezado -->
+    <div>
+
+        <div class="flex items-center gap-2 text-sm text-slate-500">
+
+            <a href="{% url 'lista_vehiculos' %}" class="hover:text-blue-600">
+                Vehículos
+            </a>
+
+            <span>/</span>
+
+            <a href="{% url 'detalle_vehiculo' vehiculo.id %}" class="hover:text-blue-600">
+                {{ vehiculo.dominio }}
+            </a>
+
+            <span>/</span>
+
+            <span>Editar</span>
+
         </div>
-      {% endif %}
 
-      <div class="card" style="margin:0 0 14px;">
-        <div class="h2">Datos del vehículo</div>
-        <div class="muted">Editá la información del vehículo asociado.</div>
 
-        <div class="field-grid" style="margin-top:12px;">
-          {% for field in form_vehiculo %}
-            <div>
-              <div class="field-label">
-                {{ field.label }}
-                {% if field.field.required %} <span class="field-req">*</span>{% endif %}
-              </div>
-              {{ field }}
-              {% if field.errors %}<div class="field-error">{{ field.errors|striptags }}</div>{% endif %}
+        <h1 class="mt-3 text-2xl font-semibold tracking-tight text-slate-900">
+            Editar vehículo
+        </h1>
+
+        <p class="mt-1 text-sm text-slate-500">
+            Modificá la información registrada del vehículo
+            <span class="font-mono font-medium text-slate-700">
+                {{ vehiculo.dominio }}
+            </span>.
+        </p>
+
+    </div>
+
+
+    <!-- Formulario -->
+    <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+
+            {% if form_vehiculo.non_field_errors %}
+
+                <div class="m-6 rounded-lg border border-red-200 bg-red-50 p-4">
+
+                    <p class="text-sm font-semibold text-red-700">
+                        Hay errores en el formulario
+                    </p>
+
+                    <div class="mt-1 text-sm text-red-600">
+                        {{ form_vehiculo.non_field_errors }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="border-b border-slate-200 px-6 py-5">
+
+                <h2 class="text-sm font-semibold text-slate-900">
+                    Datos del vehículo
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Actualizá los datos que correspondan.
+                </p>
+
             </div>
-          {% endfor %}
-        </div>
-      </div>
 
-      <hr class="hr">
 
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn--ok" type="submit">Guardar cambios</button>
-        <a class="btn btn--ghost" href="{% url 'detalle_vehiculo' vehiculo.id %}">Cancelar</a>
-      </div>
-    </form>
-  </div>
+            <div class="grid grid-cols-1 gap-5 p-6 md:grid-cols-2">
+
+                {% for field in form_vehiculo %}
+
+                    <div>
+
+                        <label class="mb-1.5 block text-sm font-medium text-slate-700">
+
+                            {{ field.label }}
+
+                            {% if field.field.required %}
+                                <span class="text-red-500">*</span>
+                            {% endif %}
+
+                        </label>
+
+
+                        {{ field }}
+
+
+                        {% if field.help_text %}
+
+                            <p class="mt-1.5 text-xs text-slate-500">
+                                {{ field.help_text }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if field.errors %}
+
+                            <p class="mt-1.5 text-xs font-medium text-red-600">
+                                {{ field.errors|striptags }}
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <!-- Footer -->
+            <div class="flex flex-col-reverse gap-3 border-t border-slate-200 bg-slate-50 px-6 py-4 sm:flex-row sm:justify-end">
+
+                <a
+                    href="{% url 'detalle_vehiculo' vehiculo.id %}"
+                    class="inline-flex justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+
+                    Cancelar
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="inline-flex justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700">
+
+                    💾 Guardar cambios
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 {% endblock %}
