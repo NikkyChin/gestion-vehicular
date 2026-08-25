@@ -13,7 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	
+	<link rel="icon" href="{% static 'img/logo_muni.ico' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -27,12 +27,15 @@
             <!-- Logo -->
             <div class="flex h-16 items-center border-b border-slate-800 px-6">
                 <div>
+                    <img src="{% static 'img/logo_muni.png' %}" alt="Logo Municipalidad de Rawson" class="h-12 w-auto">
+                </div>
+                <div>
                     <h1 class="text-lg font-semibold tracking-tight">
                         Gestión Vehicular
                     </h1>
 
                     <p class="text-xs text-slate-400">
-                        Municipalidad
+                        Municipalidad de Rawson
                     </p>
                 </div>
             </div>
@@ -44,13 +47,6 @@
                     General
                 </p>
 
-                <a href="/"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-
-                    <span>▣</span>
-                    Dashboard
-                </a>
-
                 <a href="/vehiculos/"
                    class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
                     Vehículos
@@ -59,11 +55,6 @@
                 <a href="#"
                    class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
                     Conductores
-                </a>
-
-                <a href="#"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Movimientos
                 </a>
 
                 <p class="mb-2 mt-8 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
@@ -121,7 +112,7 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    
+
                     <div class="h-8 w-px bg-slate-200"></div>
 
                     <span class="text-sm font-medium text-slate-700">

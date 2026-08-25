@@ -1,3 +1,3 @@
 # gestion-vehicular
 
-El sistema de gestion vehicular 
+El sistema de gestión vehicular es una aplicación web destinada al registro, administración y organización de los vehículos oficiales municipales. Su alcance incluye la gestión de los automotores, la asignación de responsables, el control de su uso y llevar un registro de mantenimiendo de los mismos, con el fin de mantener un seguimiento eficiente y ordenado del parque automotor institucional. 
