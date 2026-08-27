@@ -4,6 +4,7 @@
 <html lang="es">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,120 +13,230 @@
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-	<link rel="icon" href="{% static 'img/logo_muni.ico' %}">
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'img/logo_muni.ico' %}">
+
     {% block extra_css %}{% endblock %}
+
 </head>
 
-<body class="bg-slate-50 text-slate-900">
 
-    <div class="flex min-h-screen">
+<body class="overflow-hidden bg-slate-50 text-slate-900">
 
-        <!-- SIDEBAR -->
-        <aside class="hidden w-64 flex-col bg-slate-900 text-white md:flex">
+    <!-- CONTENEDOR GENERAL -->
+    <div class="flex h-screen">
 
-            <!-- Logo -->
-            <div class="flex h-16 items-center border-b border-slate-800 px-6">
-                <div>
-                    <img src="{% static 'img/logo_muni.png' %}" alt="Logo Municipalidad de Rawson" class="h-12 w-auto">
-                </div>
-                <div>
-                    <h1 class="text-lg font-semibold tracking-tight">
+
+        <aside class="hidden h-screen w-64 shrink-0 flex-col bg-slate-900 text-white md:flex">
+
+
+            <!-- LOGO -->
+            <div class="flex h-16 shrink-0 items-center border-b border-slate-800 px-5">
+
+                <img
+                    src="{% static 'img/logo_muni.png' %}"
+                    alt="Logo Municipalidad de Rawson"
+                    class="mr-3 h-11 w-auto"
+                >
+
+                <div class="min-w-0">
+
+                    <h1 class="truncate text-sm font-semibold tracking-tight">
                         Gestión Vehicular
                     </h1>
 
-                    <p class="text-xs text-slate-400">
+                    <p class="truncate text-xs text-slate-400">
                         Municipalidad de Rawson
                     </p>
-                </div>
-            </div>
-
-            <!-- Navegación -->
-            <nav class="flex-1 px-3 py-6">
-
-                <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    General
-                </p>
-
-                <a href="/vehiculos/"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Vehículos
-                </a>
-
-                <a href="#"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Conductores
-                </a>
-
-                <p class="mb-2 mt-8 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                    Gestión
-                </p>
-
-                <a href="#"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Mantenimientos
-                </a>
-
-                <a href="#"
-                   class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white">
-                    Reportes
-                </a>
-
-            </nav>
-
-            <!-- Usuario -->
-            <div class="border-t border-slate-800 p-4">
-
-                <div class="flex items-center gap-3">
-
-                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold">
-                        U
-                    </div>
-
-                    <div>
-                        <p class="text-sm font-medium">
-                            Usuario
-                        </p>
-
-                        <p class="text-xs text-slate-400">
-                            Administrador
-                        </p>
-                    </div>
 
                 </div>
 
             </div>
+
+
+            {% if not request.user.is_authenticated %}
+
+                <div class="flex-1 overflow-y-auto px-3 py-6">
+
+                    <p class="px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Por favor, iniciá sesión para acceder a las opciones.
+                    </p>
+
+                </div>
+
+            {% else %}
+
+                <nav class="flex-1 overflow-y-auto px-3 py-6">
+
+
+                    <!-- GENERAL -->
+
+                    <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        General
+                    </p>
+
+
+                    <a
+                        href="/vehiculos/lista/"
+                        class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                    >
+                        <span>Vehículos</span>
+                    </a>
+
+
+                    <a
+                        href="#"
+                        class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                    >
+                        <span>Conductores</span>
+                    </a>
+
+
+                    <!-- GESTIÓN -->
+
+                    <p class="mb-2 mt-8 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Gestión
+                    </p>
+
+
+                    <a
+                        href="#"
+                        class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                    >
+                        <span>Mantenimientos</span>
+                    </a>
+
+
+                    <a
+                        href="#"
+                        class="mb-1 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                    >
+                        <span>Reportes</span>
+                    </a>
+
+
+                </nav>
+
+            {% endif %}
+
+            <div class="shrink-0 border-t border-slate-800 p-4">
+
+
+                {% if request.user.is_authenticated %}
+
+                    <div class="flex items-center gap-3">
+
+
+                        <!-- Avatar -->
+
+                        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white">
+
+                            {{ request.user.username|first|upper }}
+
+                        </div>
+
+
+                        <!-- Información -->
+
+                        <div class="min-w-0 flex-1">
+
+                            <p class="truncate text-sm font-medium text-white">
+                                {{ request.user.username }}
+                            </p>
+
+                            {% if request.user.get_full_name %}
+
+                                <p class="truncate text-xs text-slate-400">
+                                    {{ request.user.get_full_name }}
+                                </p>
+
+                            {% endif %}
+
+
+                            {% if request.user.groups.exists %}
+
+                                <p class="truncate text-xs text-slate-500">
+                                    {{ request.user.groups.first.name }}
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Acciones -->
+
+                    <div class="mt-3 flex gap-2">
+
+                        <a
+                            href="{% url 'cambiar_contraseña' %}"
+                            class="flex-1 rounded-lg border border-slate-700 px-3 py-2 text-center text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                        >
+                            Contraseña
+                        </a>
+
+
+                        <form
+                            method="post"
+                            action="{% url 'logout' %}"
+                            class="flex-1"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                class="w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+                                type="submit"
+                            >
+                                Salir
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                {% else %}
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-sm">
+                            ?
+                        </div>
+
+                        <div>
+
+                            <p class="text-sm font-medium text-white">
+                                Invitado
+                            </p>
+
+                            <p class="text-xs text-slate-500">
+                                Sin sesión
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
 
         </aside>
 
-
-        <!-- CONTENIDO PRINCIPAL -->
         <div class="flex min-w-0 flex-1 flex-col">
 
-            <!-- HEADER -->
-            <header class="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
-
-                <div>
-                    <h2 class="text-sm font-medium text-slate-500">
-                        {% block page_section %}Gestión Vehicular{% endblock %}
-                    </h2>
-                </div>
-
-                <div class="flex items-center gap-4">
-
-                    <div class="h-8 w-px bg-slate-200"></div>
-
-                    <span class="text-sm font-medium text-slate-700">
-                        Usuario
-                    </span>
-
-                </div>
-
-            </header>
+            <main class="min-h-0 flex-1 overflow p-6 lg:p-8 lg:pt-6">
 
 
-            <!-- MAIN -->
-            <main class="flex-1 p-6 lg:p-8">
+                <!-- MENSAJES -->
 
                 {% if messages %}
 
@@ -133,8 +244,10 @@
 
                         {% for message in messages %}
 
-                            <div class="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm">
+                            <div class="mb-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm shadow-sm">
+
                                 {{ message }}
+
                             </div>
 
                         {% endfor %}
@@ -144,6 +257,8 @@
                 {% endif %}
 
 
+                <!-- CONTENIDO DE CADA PÁGINA -->
+
                 <div class="mx-auto max-w-7xl">
 
                     {% block content %}
@@ -151,9 +266,12 @@
 
                 </div>
 
+
             </main>
 
+
         </div>
+
 
     </div>
 
@@ -162,4 +280,5 @@
     {% endblock %}
 
 </body>
+
 </html>

@@ -93,4 +93,4 @@ def editar_vehiculo(request, vehiculo_id):
 
 
 def inicio(request):
-    return render(request, "vehiculos/inicio.html")
+    return render(request, "usuarios/inicio.html")

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Contraseña actualizada{% endblock %}
+
+{% block content %}
+
+<div class="page-center">
+    <div class="card auth-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1 class="page-title text-center">
+            Contraseña actualizada
+        </h1>
+
+        <p class="page-description text-center">
+            Tu contraseña fue modificada correctamente.
+        </p>
+
+        <div class="mt-6 text-center">
+            <a class="btn-secondary" href="{% url 'home' %}">
+                ← Volver al inicio
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

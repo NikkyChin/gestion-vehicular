@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Cambiar contraseña{% endblock %}
+
+{% block content %}
+
+<div class="page-center">
+    <div class="card auth-card">
+
+        <h1 class="page-title">
+            Cambiar contraseña
+        </h1>
+
+        <p class="page-description">
+            Por seguridad, ingresá tu contraseña actual y luego establecé la nueva.
+        </p>
+
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group">
+
+                    <label class="form-label" for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <p class="form-help">
+                            {{ field.help_text }}
+                        </p>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <p class="form-error">
+                            {{ field.errors|striptags }}
+                        </p>
+                    {% endif %}
+
+                </div>
+            {% endfor %}
+
+            <div class="pt-2">
+                <button class="btn-primary" type="submit">
+                    🔐 Actualizar contraseña
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

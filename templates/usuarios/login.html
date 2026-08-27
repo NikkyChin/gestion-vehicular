@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ingreso – Gestión Vehicular{% endblock %}
+
+{% block content %}
+
+<div class="page-center">
+    <div class="card login-card">
+
+        <div class="login-header">
+
+            <img
+                src="{% static 'img/logo_muni.png' %}"
+                class="login-logo"
+                alt="Logo Municipalidad"
+            >
+
+            <h1 class="page-title">
+                Gestión Vehicular Municipal
+            </h1>
+
+            <p class="page-description">
+                Sistema de administración de vehículos oficiales.
+            </p>
+
+        </div>
+
+        {% if form.errors %}
+            <div class="alert-error">
+                <strong>Credenciales incorrectas</strong>
+
+                <p>
+                    Usuario o contraseña inválidos.
+                </p>
+            </div>
+        {% endif %}
+
+        <form method="post" class="form-stack">
+            {% csrf_token %}
+
+            <div class="form-group">
+
+                <label class="form-label" for="{{ form.username.id_for_label }}">
+                    Usuario
+                </label>
+
+                {{ form.username }}
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="form-label" for="{{ form.password.id_for_label }}">
+                    Contraseña
+                </label>
+
+                {{ form.password }}
+
+            </div>
+
+            <button class="btn-primary btn-full" type="submit">
+                🔐 Ingresar al sistema
+            </button>
+
+        </form>
+
+        <div class="login-footer">
+            Acceso exclusivo para personal autorizado
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

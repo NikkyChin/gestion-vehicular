@@ -92,3 +92,286 @@
     background-color: #f8fafc;
     color: #0f172a;
 }
+
+/* =========================================================
+   LAYOUT GENERAL
+   ========================================================= */
+
+.page-center {
+    width: 100%;
+    min-height: calc(100vh - 180px);
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-top: 2.5rem;
+}
+
+
+/* =========================================================
+   TARJETAS DE AUTENTICACIÓN
+   ========================================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 32rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 26rem;
+}
+
+.page-title {
+    margin: 0;
+
+    font-size: 1.5rem;
+    line-height: 1.25;
+
+    font-weight: 700;
+
+    color: #0f172a;
+}
+
+.page-description {
+    margin-top: 0.75rem;
+
+    font-size: 0.875rem;
+    line-height: 1.5;
+
+    color: #64748b;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+/* =========================================================
+   HEADER LOGIN
+   ========================================================= */
+
+.login-header {
+    margin-bottom: 1.75rem;
+    text-align: center;
+}
+
+.login-logo {
+    display: block;
+
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+
+    margin: 0 auto 1.25rem;
+}
+
+
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.form-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    color: #334155;
+}
+
+.form-help {
+    margin: 0;
+
+    font-size: 0.75rem;
+    line-height: 1.4;
+
+    color: #64748b;
+}
+
+.form-error {
+    margin: 0;
+
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    color: #dc2626;
+}
+
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.alert-error {
+    margin-bottom: 1.25rem;
+
+    border: 1px solid #fecaca;
+    border-radius: 0.625rem;
+
+    background-color: #fef2f2;
+
+    padding: 0.875rem 1rem;
+
+    color: #991b1b;
+}
+
+.alert-error strong {
+    display: block;
+
+    font-size: 0.875rem;
+}
+
+.alert-error p {
+    margin: 0.25rem 0 0;
+
+    font-size: 0.8125rem;
+
+    color: #b91c1c;
+}
+
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn-full {
+    width: 100%;
+}
+
+
+/* =========================================================
+   ICONOS DE ESTADO
+   ========================================================= */
+
+.success-icon,
+.warning-icon {
+    width: 3rem;
+    height: 3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 1rem;
+
+    border-radius: 9999px;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.success-icon {
+    background-color: #dcfce7;
+    color: #15803d;
+}
+
+.warning-icon {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
+
+/* =========================================================
+   LOGIN FOOTER
+   ========================================================= */
+
+.login-footer {
+    margin-top: 1.25rem;
+
+    text-align: center;
+
+    font-size: 0.75rem;
+
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   USUARIO / NAVBAR
+   ========================================================= */
+
+.userbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.userbox__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    color: #334155;
+}
+
+.userbox__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.userbox__actions form {
+    margin: 0;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-input,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+
+    background-color: #f8fafc;
+
+    padding: 0.625rem 0.75rem;
+
+    font-size: 0.875rem;
+
+    color: #0f172a;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-input::placeholder,
+input::placeholder {
+    color: #94a3b8;
+}
+
+.form-input:hover,
+input:hover {
+    border-color: #cbd5e1;
+}
+
+.form-input:focus,
+input:focus {
+    border-color: #3b82f6;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 0 0 3px rgb(219 234 254);
+}
