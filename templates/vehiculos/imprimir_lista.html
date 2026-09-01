@@ -220,6 +220,10 @@
                         Área asignada
                     </th>
 
+                    <th style="width:120px;">
+                        Estado
+                    </th>
+
                 </tr>
 
             </thead>
@@ -257,6 +261,10 @@
 
                         <td>
                             {{ v.area_asignada|default:"-" }}
+                        </td>
+                        
+                        <td>
+                            {{ v.get_estado_display }}
                         </td>
 
                     </tr>

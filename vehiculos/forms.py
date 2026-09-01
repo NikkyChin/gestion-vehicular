@@ -16,6 +16,7 @@ class EditarVehiculoForm(forms.ModelForm):
             "nro_chasis",
             "nro_motor",
             "area_asignada",
+            "estado",
         )
 
         widgets = {
@@ -72,6 +73,12 @@ class EditarVehiculoForm(forms.ModelForm):
                 attrs={
                     "class": "form-input border border-black bg-slate-50 px-2 py-1 rounded-md",
                     "placeholder": "Ej: Secretaría de Obras Públicas",
+                }
+            ),
+            
+            "estado": forms.Select(
+                attrs={
+                    "class": "form-input border border-black bg-slate-50 px-2 py-1 rounded-md w-full",
                 }
             ),
         }

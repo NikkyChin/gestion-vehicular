@@ -149,6 +149,10 @@
                                 Área
                             </th>
 
+                            <th class="px-6 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                                Estado
+                            </th>
+
                             <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
                                 Acciones
                             </th>
@@ -202,7 +206,15 @@
                                 <td class="px-6 py-4 text-sm text-slate-600">
                                     {{ v.area_asignada|default:"-" }}
                                 </td>
+                                
+                                <!-- Estado -->
+                                <td class="px-6 py-4 text-sm text-slate-600">
 
+                                    <span class="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                                        {{ v.get_estado_display }}
+                                    </span>
+
+                                </td>
 
                                 <!-- Acciones -->
                                 <td class="whitespace-nowrap px-6 py-4 text-right">

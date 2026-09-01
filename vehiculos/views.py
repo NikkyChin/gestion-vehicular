@@ -48,12 +48,20 @@ def detalle_vehiculo(request, vehiculo_id):
     if "ADMINISTRATIVO" not in grupos and "ADMIN_SISTEMA" not in grupos:
         return render(request, "usuarios/no_permisos.html")
 
-    vehiculo = get_object_or_404(Vehiculo, id=vehiculo_id)
+    vehiculo = get_object_or_404(
+        Vehiculo.objects.prefetch_related("mantenimientos"),
+        id=vehiculo_id,
+    )
+
+    mantenimientos = vehiculo.mantenimientos.all().order_by("-fecha")
 
     return render(
         request,
         "vehiculos/detalle_vehiculo.html",
-        {"vehiculo": vehiculo},
+        {
+            "vehiculo": vehiculo,
+            "mantenimientos": mantenimientos,
+        },
     )
 
 

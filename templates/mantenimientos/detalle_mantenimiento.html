@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+
+{% block title %}Mantenimiento | {{ mantenimiento.vehiculo.dominio }} | Gestión Vehicular{% endblock %}
+
+{% block page_section %}
+Vehículos / {{ mantenimiento.vehiculo.dominio }} / Mantenimiento
+{% endblock %}
+
+{% block content %}
+
+<div class="space-y-6">
+
+<!-- Encabezado -->
+<div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+
+    <div>
+
+        <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+
+            <a
+                href="{% url 'lista_vehiculos' %}"
+                class="hover:text-blue-600"
+            >
+                Vehículos
+            </a>
+
+            <span>/</span>
+
+            <a
+                href="{% url 'detalle_vehiculo' mantenimiento.vehiculo.id %}"
+                class="hover:text-blue-600"
+            >
+                {{ mantenimiento.vehiculo.dominio }}
+            </a>
+
+            <span>/</span>
+
+            <span>Mantenimiento</span>
+
+        </div>
+
+
+        <div class="mt-3">
+
+            <div class="flex flex-wrap items-center gap-3">
+
+                <h1 class="text-2xl font-semibold tracking-tight text-slate-900">
+                    {{ mantenimiento.get_tipo_display }}
+                </h1>
+
+                <span class="rounded-md bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                    {{ mantenimiento.get_tipo_display }}
+                </span>
+
+            </div>
+
+
+            <p class="mt-1 text-sm text-slate-500">
+
+                Vehículo
+
+                <span class="font-mono font-medium text-slate-700">
+                    {{ mantenimiento.vehiculo.dominio }}
+                </span>
+
+                · {{ mantenimiento.fecha|date:"d/m/Y" }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="flex gap-2">
+
+        <a
+            href="{% url 'editar_mantenimiento' mantenimiento.id %}"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
+        >
+            ✏️ Editar
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- Información -->
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+
+    <!-- Información principal -->
+    <div class="lg:col-span-2 rounded-xl border border-black bg-white shadow-sm">
+
+        <div class="border-b border-black px-6 py-5">
+
+            <h2 class="text-sm font-semibold text-slate-900">
+                Información del mantenimiento
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Detalle del mantenimiento realizado.
+            </p>
+
+        </div>
+
+
+        <dl class="divide-y divide-slate-100">
+
+
+            <!-- Tipo -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Tipo
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+                    {{ mantenimiento.get_tipo_display }}
+                </dd>
+
+            </div>
+
+
+            <!-- Fecha -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Fecha
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+                    {{ mantenimiento.fecha|date:"d/m/Y" }}
+                </dd>
+
+            </div>
+
+
+            <!-- Descripción -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Descripción
+                </dt>
+
+                <dd class="whitespace-pre-line text-sm text-slate-900 sm:col-span-2">
+                    {{ mantenimiento.descripcion|default:"-" }}
+                </dd>
+
+            </div>
+
+
+            <!-- Fecha ingreso -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Ingreso al taller
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+
+                    {% if mantenimiento.fecha_ingreso %}
+                        {{ mantenimiento.fecha_ingreso|date:"d/m/Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </dd>
+
+            </div>
+
+
+            <!-- Fecha salida -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Salida del taller
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+
+                    {% if mantenimiento.fecha_salida %}
+                        {{ mantenimiento.fecha_salida|date:"d/m/Y" }}
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </dd>
+
+            </div>
+
+
+            <!-- Kilometraje -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Kilometraje
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+
+                    {% if mantenimiento.kilometraje %}
+                        {{ mantenimiento.kilometraje }} km
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </dd>
+
+            </div>
+
+
+            <!-- Proveedor -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Proveedor / Taller
+                </dt>
+
+                <dd class="text-sm text-slate-900 sm:col-span-2">
+                    {{ mantenimiento.proveedor|default:"-" }}
+                </dd>
+
+            </div>
+
+
+            <!-- Costo -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Costo
+                </dt>
+
+                <dd class="text-sm font-semibold text-slate-900 sm:col-span-2">
+
+                    {% if mantenimiento.costo %}
+                        $ {{ mantenimiento.costo|floatformat:2 }}
+                    {% else %}
+                        -
+                    {% endif %}
+
+                </dd>
+
+            </div>
+
+
+            <!-- Observaciones -->
+
+            <div class="grid grid-cols-1 gap-1 px-6 py-4 sm:grid-cols-3">
+
+                <dt class="text-sm font-medium text-slate-500">
+                    Observaciones
+                </dt>
+
+                <dd class="whitespace-pre-line text-sm text-slate-900 sm:col-span-2">
+                    {{ mantenimiento.observaciones|default:"-" }}
+                </dd>
+
+            </div>
+
+        </dl>
+
+    </div>
+
+
+    <!-- Resumen -->
+    <div class="space-y-6">
+
+
+        <!-- Vehículo -->
+
+        <div class="rounded-xl border border-black bg-white p-6 shadow-sm">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Vehículo
+            </p>
+
+
+            <div class="mt-4">
+
+                <p class="font-mono text-lg font-semibold text-slate-900">
+                    {{ mantenimiento.vehiculo.dominio }}
+                </p>
+
+                <p class="mt-1 text-sm text-slate-600">
+                    {{ mantenimiento.vehiculo.marca }}
+                    {{ mantenimiento.vehiculo.modelo }}
+                </p>
+
+
+                <a
+                    href="{% url 'detalle_vehiculo' mantenimiento.vehiculo.id %}"
+                    class="mt-4 inline-flex text-sm font-medium text-blue-600 hover:text-blue-700"
+                >
+                    Ver vehículo →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Información administrativa -->
+
+        <div class="rounded-xl border border-black bg-white p-6 shadow-sm">
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Registro
+            </p>
+
+
+            <div class="mt-5 space-y-4">
+
+                <div>
+
+                    <p class="text-xs text-slate-500">
+                        Registrado
+                    </p>
+
+                    <p class="mt-1 text-sm font-medium text-slate-900">
+                        {{ mantenimiento.fecha_registro|date:"d/m/Y H:i" }}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="text-xs text-slate-500">
+                        Última modificación
+                    </p>
+
+                    <p class="mt-1 text-sm font-medium text-slate-900">
+                        {{ mantenimiento.fecha_modificacion|date:"d/m/Y H:i" }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Acciones -->
+
+<div class="flex flex-col gap-3 sm:flex-row sm:justify-between">
+
+
+    <a
+        href="{% url 'detalle_vehiculo' mantenimiento.vehiculo.id %}"
+        class="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+    >
+        ← Volver al vehículo
+    </a>
+
+
+    <div class="flex flex-col gap-3 sm:flex-row">
+
+        <a
+            href="{% url 'editar_mantenimiento' mantenimiento.id %}"
+            class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
+        >
+            Editar mantenimiento
+        </a>
+
+
+        <a
+            href="{% url 'eliminar_mantenimiento' mantenimiento.id %}"
+            class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+        >
+            Eliminar
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}Editar mantenimiento | Gestión Vehicular{% endblock %}
+
+{% block page_section %}
+Vehículos / {{ vehiculo.dominio }} / Editar mantenimiento
+{% endblock %}
+
+{% block content %}
+
+<div class="mx-auto max-w-4xl space-y-6">
+
+<!-- Encabezado -->
+<div>
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+
+        <a
+            href="{% url 'lista_vehiculos' %}"
+            class="hover:text-blue-600"
+        >
+            Vehículos
+        </a>
+
+        <span>/</span>
+
+        <a
+            href="{% url 'detalle_vehiculo' vehiculo.id %}"
+            class="hover:text-blue-600"
+        >
+            {{ vehiculo.dominio }}
+        </a>
+
+        <span>/</span>
+
+        <span>Editar mantenimiento</span>
+
+    </div>
+
+
+    <h1 class="mt-3 text-2xl font-semibold tracking-tight text-slate-900">
+        Editar mantenimiento
+    </h1>
+
+    <p class="mt-1 text-sm text-slate-500">
+
+        Modificá la información del mantenimiento registrado para el vehículo
+
+        <span class="font-mono font-medium text-slate-700">
+            {{ vehiculo.dominio }}
+        </span>.
+
+    </p>
+
+</div>
+
+
+<!-- Información del vehículo -->
+<div class="rounded-xl border border-black bg-slate-50 px-6 py-4">
+
+    <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+
+        <div>
+
+            <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Vehículo
+            </p>
+
+            <p class="mt-1 text-sm font-semibold text-slate-900">
+                {{ vehiculo.marca }} {{ vehiculo.modelo }}
+            </p>
+
+        </div>
+
+
+        <span class="w-fit rounded-md bg-white px-3 py-1 font-mono text-sm font-semibold text-slate-800 shadow-sm">
+            {{ vehiculo.dominio }}
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- Formulario -->
+<div class="rounded-xl border border-black bg-white shadow-sm">
+
+    <form method="post">
+
+        {% csrf_token %}
+
+
+        {% if form.non_field_errors %}
+
+            <div class="m-6 rounded-lg border border-red-200 bg-red-50 p-4">
+
+                <p class="text-sm font-semibold text-red-700">
+                    Hay errores en el formulario
+                </p>
+
+                <div class="mt-1 text-sm text-red-600">
+                    {{ form.non_field_errors }}
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="border-b border-black px-6 py-5">
+
+            <h2 class="text-sm font-semibold text-slate-900">
+                Datos del mantenimiento
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Actualizá los datos que correspondan.
+            </p>
+
+        </div>
+
+
+        <div class="grid grid-cols-1 gap-5 p-6 md:grid-cols-2">
+
+            {% for field in form %}
+
+                <div
+                    {% if field.name == "descripcion" or field.name == "observaciones" %}
+                        class="md:col-span-2"
+                    {% endif %}
+                >
+
+                    <label class="mb-1.5 block text-sm font-medium text-slate-700">
+
+                        {{ field.label }}
+
+                        {% if field.field.required %}
+                            <span class="text-red-500">*</span>
+                        {% endif %}
+
+                    </label>
+
+
+                    {{ field }}
+
+
+                    {% if field.help_text %}
+
+                        <p class="mt-1.5 text-xs text-slate-500">
+                            {{ field.help_text }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if field.errors %}
+
+                        <p class="mt-1.5 text-xs font-medium text-red-600">
+                            {{ field.errors|striptags }}
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- Footer -->
+        <div class="flex flex-col-reverse gap-3 border-t border-black bg-slate-50 px-6 py-4 sm:flex-row sm:justify-end">
+
+            <a
+                href="{% url 'detalle_vehiculo' vehiculo.id %}"
+                class="inline-flex justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+            >
+                Cancelar
+            </a>
+
+
+            <button
+                type="submit"
+                class="inline-flex justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700"
+            >
+                Guardar cambios
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+</div>
+
+{% endblock %}
