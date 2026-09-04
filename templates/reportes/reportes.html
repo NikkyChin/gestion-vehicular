@@ -1,0 +1,302 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+    <!-- Encabezado -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold text-slate-900">
+            Reportes
+        </h1>
+
+        <p class="mt-1 text-sm text-slate-500">
+            Resumen general del parque automotor.
+        </p>
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- INDICADORES PRINCIPALES -->
+    <!-- ========================= -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+
+        <!-- Total vehículos -->
+        <div class="bg-white rounded-xl border border-black p-5 shadow-sm">
+
+            <p class="text-sm text-slate-500">
+                Total de vehículos
+            </p>
+
+            <p class="mt-2 text-3xl font-semibold text-slate-900">
+                {{ total_vehiculos }}
+            </p>
+
+        </div>
+
+
+        <!-- Vehículos con encargado -->
+        <div class="bg-white rounded-xl border border-black p-5 shadow-sm">
+
+            <p class="text-sm text-slate-500">
+                Vehículos con encargado
+            </p>
+
+            <p class="mt-2 text-3xl font-semibold text-slate-900">
+                {{ vehiculos_con_encargado }}
+            </p>
+
+        </div>
+
+
+        <!-- Sin encargado -->
+        <div class="bg-white rounded-xl border border-black p-5 shadow-sm">
+
+            <p class="text-sm text-slate-500">
+                Vehículos sin encargado
+            </p>
+
+            <p class="mt-2 text-3xl font-semibold text-slate-900">
+                {{ vehiculos_sin_encargado }}
+            </p>
+
+        </div>
+
+
+        <!-- Mantenimientos -->
+        <div class="bg-white rounded-xl border border-black p-5 shadow-sm">
+
+            <p class="text-sm text-slate-500">
+                Mantenimientos registrados
+            </p>
+
+            <p class="mt-2 text-3xl font-semibold text-slate-900">
+                {{ total_mantenimientos }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- SEGUNDA FILA -->
+    <!-- ========================= -->
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+
+        <!-- ========================= -->
+        <!-- VEHÍCULOS POR ESTADO -->
+        <!-- ========================= -->
+
+        <div class="bg-white rounded-xl border border-black shadow-sm">
+
+            <div class="px-5 py-4 border-b border-black">
+
+                <h2 class="text-base font-semibold text-slate-900">
+                    Vehículos por estado
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Distribución actual de los vehículos registrados.
+                </p>
+
+            </div>
+
+
+            <div class="p-5">
+
+                {% if vehiculos_por_estado %}
+
+                    <div class="space-y-3">
+
+                        {% for estado in vehiculos_por_estado %}
+
+                            <div class="flex items-center justify-between">
+
+                                <span class="text-sm text-slate-700">
+                                    {{ estado.estado }}
+                                </span>
+
+                                <span class="text-sm font-semibold text-slate-900">
+                                    {{ estado.total }}
+                                </span>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p class="text-sm text-slate-500">
+                        No hay información disponible.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- ENCARGADOS -->
+        <!-- ========================= -->
+
+        <div class="bg-white rounded-xl border border-black shadow-sm">
+
+            <div class="px-5 py-4 border-b border-black">
+
+                <h2 class="text-base font-semibold text-slate-900">
+                    Encargados
+                </h2>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Situación actual de los encargados registrados.
+                </p>
+
+            </div>
+
+
+            <div class="p-5">
+
+                <div class="grid grid-cols-2 gap-4">
+
+                    <div class="rounded-lg bg-slate-50 p-4">
+
+                        <p class="text-sm text-slate-500">
+                            Total registrados
+                        </p>
+
+                        <p class="mt-1 text-2xl font-semibold text-slate-900">
+                            {{ total_encargados }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="rounded-lg bg-slate-50 p-4">
+
+                        <p class="text-sm text-slate-500">
+                            Activos
+                        </p>
+
+                        <p class="mt-1 text-2xl font-semibold text-slate-900">
+                            {{ encargados_activos }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- MANTENIMIENTOS POR TIPO -->
+    <!-- ========================= -->
+
+    <div class="mt-6 bg-white rounded-xl border border-black shadow-sm">
+
+        <div class="px-5 py-4 border-b border-black">
+
+            <h2 class="text-base font-semibold text-slate-900">
+                Mantenimientos por tipo
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Cantidad de mantenimientos registrados según su tipo.
+            </p>
+
+        </div>
+
+
+        <div class="p-5">
+
+            {% if mantenimientos_por_tipo %}
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-sm">
+
+                        <thead>
+
+                            <tr class="border-b border-slate-200">
+
+                                <th class="text-left py-3 px-2 font-medium text-slate-500">
+                                    Tipo de mantenimiento
+                                </th>
+
+                                <th class="text-right py-3 px-2 font-medium text-slate-500">
+                                    Cantidad
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for mantenimiento in mantenimientos_por_tipo %}
+
+                                <tr class="border-b border-slate-100 last:border-0">
+
+                                    <td class="py-3 px-2 text-slate-700">
+                                        {{ mantenimiento.tipo }}
+                                    </td>
+
+                                    <td class="py-3 px-2 text-right font-semibold text-slate-900">
+                                        {{ mantenimiento.total }}
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            {% else %}
+
+                <p class="text-sm text-slate-500">
+                    No hay mantenimientos registrados.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="mt-6 flex justify-end">
+        <a href="{% url 'imprimir_reportes' %}" class="inline-flex items-center px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition">
+
+            Imprimir reporte
+
+        </a>
+    </div>
+
+    <!-- ========================= -->
+    <!-- PIE -->
+    <!-- ========================= -->
+
+    <div class="mt-6 text-xs text-slate-400">
+        Información generada a partir de los registros actuales del sistema.
+    </div>
+
+</div>
+
+{% endblock %}

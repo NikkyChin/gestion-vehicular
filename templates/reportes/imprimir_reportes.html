@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Reporte de Gestión Vehicular
+    </title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .encabezado {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 90px;
+            height: auto;
+        }
+
+        .encabezado-texto h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .encabezado-texto h2 {
+            margin: 5px 0;
+            font-size: 20px;
+        }
+
+        .encabezado-texto p {
+            margin: 2px 0;
+            font-size: 14px;
+        }
+
+        h2 {
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .resumen {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tarjeta {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .tarjeta-label {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .tarjeta-valor {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .detail {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            border-bottom: 2px solid #000;
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        td {
+            border-bottom: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th:last-child,
+        td:last-child {
+            text-align: right;
+        }
+
+        .fila-total td {
+            font-weight: bold;
+            border-top: 2px solid #000;
+        }
+
+        .no-print {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .no-print button {
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .no-print a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #000;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media print {
+
+            .no-print {
+                display: none;
+            }
+
+            body {
+                margin: 0;
+            }
+
+            .container {
+                max-width: none;
+            }
+
+            .detail,
+            .tarjeta {
+                break-inside: avoid;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ========================= -->
+    <!-- ENCABEZADO INSTITUCIONAL -->
+    <!-- ========================= -->
+
+    <div class="encabezado">
+
+        <div class="logo-container">
+
+            <img
+                src="/static/img/logo_muni.png"
+                alt="Logo Municipalidad"
+                class="logo"
+            >
+
+        </div>
+
+
+        <div class="encabezado-texto">
+
+            <h1>
+                Municipalidad de Rawson
+            </h1>
+
+            <h2>
+                Reporte de Gestión Vehicular
+            </h2>
+
+            <p>
+                Fecha de impresión:
+                {% now "d/m/Y H:i" %}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- RESUMEN GENERAL -->
+    <!-- ========================= -->
+
+    <h2>
+        Resumen general
+    </h2>
+
+    <div class="resumen">
+
+        <div class="tarjeta">
+
+            <div class="tarjeta-label">
+                Total de vehículos
+            </div>
+
+            <div class="tarjeta-valor">
+                {{ total_vehiculos }}
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <div class="tarjeta-label">
+                Vehículos con encargado
+            </div>
+
+            <div class="tarjeta-valor">
+                {{ vehiculos_con_encargado }}
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <div class="tarjeta-label">
+                Vehículos sin encargado
+            </div>
+
+            <div class="tarjeta-valor">
+                {{ vehiculos_sin_encargado }}
+            </div>
+
+        </div>
+
+
+        <div class="tarjeta">
+
+            <div class="tarjeta-label">
+                Mantenimientos registrados
+            </div>
+
+            <div class="tarjeta-valor">
+                {{ total_mantenimientos }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- VEHÍCULOS POR ESTADO -->
+    <!-- ========================= -->
+
+    <h2>
+        Vehículos por estado
+    </h2>
+
+    <div class="detail">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Estado
+                    </th>
+
+                    <th>
+                        Cantidad
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for estado in vehiculos_por_estado %}
+
+                    <tr>
+
+                        <td>
+                            {{ estado.estado }}
+                        </td>
+
+                        <td>
+                            {{ estado.total }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="2">
+                            No hay vehículos registrados.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- ENCARGADOS -->
+    <!-- ========================= -->
+
+    <h2>
+        Encargados
+    </h2>
+
+    <div class="detail">
+
+        <table>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Total de encargados registrados
+                    </td>
+
+                    <td>
+                        {{ total_encargados }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Encargados activos
+                    </td>
+
+                    <td>
+                        {{ encargados_activos }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Vehículos con encargado
+                    </td>
+
+                    <td>
+                        {{ vehiculos_con_encargado }}
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Vehículos sin encargado
+                    </td>
+
+                    <td>
+                        {{ vehiculos_sin_encargado }}
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- MANTENIMIENTOS -->
+    <!-- ========================= -->
+
+    <h2>
+        Mantenimientos por tipo
+    </h2>
+
+    <div class="detail">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Tipo de mantenimiento
+                    </th>
+
+                    <th>
+                        Cantidad
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for mantenimiento in mantenimientos_por_tipo %}
+
+                    <tr>
+
+                        <td>
+                            {{ mantenimiento.tipo }}
+                        </td>
+
+                        <td>
+                            {{ mantenimiento.total }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="2">
+                            No hay mantenimientos registrados.
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BOTÓN IMPRIMIR -->
+    <!-- ========================= -->
+
+    <div class="no-print">
+
+        <button
+            type="button"
+            onclick="window.print()"
+        >
+            Imprimir
+        </button>
+
+        <a href="{% url 'reportes' %}" >
+            Volver
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PIE -->
+    <!-- ========================= -->
+
+    <div class="footer">
+
+        Municipalidad de Rawson -
+        Sistema de Gestión Vehicular
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
