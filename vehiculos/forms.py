@@ -1,8 +1,23 @@
 from django import forms
 from .models import Vehiculo
+from encargados.models import Encargado
 
 
 class EditarVehiculoForm(forms.ModelForm):
+
+    encargado = forms.ModelChoiceField(
+        queryset=Encargado.objects.filter(activo=True).order_by(
+            "apellido",
+            "nombre",
+        ),
+        required=False,
+        empty_label="Sin encargado asignado",
+        widget=forms.Select(
+            attrs={
+                "class": "form-input border border-black bg-slate-50 px-2 py-1 rounded-md w-full",
+            }
+        ),
+    )
 
     class Meta:
         model = Vehiculo
@@ -75,7 +90,7 @@ class EditarVehiculoForm(forms.ModelForm):
                     "placeholder": "Ej: Secretaría de Obras Públicas",
                 }
             ),
-            
+
             "estado": forms.Select(
                 attrs={
                     "class": "form-input border border-black bg-slate-50 px-2 py-1 rounded-md w-full",

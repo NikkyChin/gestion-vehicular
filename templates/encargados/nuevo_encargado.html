@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nuevo encargado | Gestión Vehicular
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-8">
+
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+
+        <a
+            href="{% url 'lista_encargados' %}"
+            class="hover:text-blue-600"
+        >
+            Encargados
+        </a>
+
+        <span>/</span>
+
+        <span>Nuevo encargado</span>
+
+    </div>
+
+    <h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-900">
+        Nuevo encargado
+    </h1>
+
+    <p class="mt-2 text-sm text-slate-500">
+        Registrá una nueva persona responsable de vehículos.
+    </p>
+
+</div>
+
+
+<div class="max-w-3xl rounded-xl border border-black bg-white p-6 shadow-sm">
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+
+            <div class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+            {% for field in form %}
+
+                {% if field.name != "activo" %}
+
+                    <div>
+
+                        <label
+                            for="{{ field.id_for_label }}"
+                            class="mb-1.5 block text-sm font-semibold text-slate-700"
+                        >
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="mt-1 text-xs text-red-600">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="mt-6 rounded-lg border border-black bg-slate-50 p-4">
+
+            <div class="flex items-center gap-3">
+
+                {{ form.activo }}
+
+                <div>
+
+                    <label
+                        for="{{ form.activo.id_for_label }}"
+                        class="text-sm font-semibold text-slate-700"
+                    >
+                        Encargado activo
+                    </label>
+
+                    <p class="text-xs text-slate-500">
+                        Los encargados activos pueden ser asignados a vehículos.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% if form.activo.errors %}
+                <div class="mt-2 text-xs text-red-600">
+                    {{ form.activo.errors }}
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <div class="mt-8 flex justify-end gap-3">
+
+            <a
+                href="{% url 'lista_encargados' %}"
+                class="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+                Cancelar
+            </a>
+
+            <button
+                type="submit"
+                class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+            >
+                Guardar encargado
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

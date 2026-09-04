@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ encargado.apellido }}, {{ encargado.nombre }} | Gestión Vehicular
+{% endblock %}
+
+{% block content %}
+
+<div class="mb-8">
+
+    <div class="flex items-center gap-2 text-sm text-slate-500">
+
+        <a
+            href="{% url 'lista_encargados' %}"
+            class="hover:text-blue-600"
+        >
+            Encargados
+        </a>
+
+        <span>/</span>
+
+        <span>
+            {{ encargado.apellido }}, {{ encargado.nombre }}
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- CABECERA -->
+
+<div class="mb-6 flex flex-col gap-4 rounded-xl border border-black bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+
+    <div class="flex items-center gap-4">
+
+        <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue-100 text-lg font-bold text-blue-700">
+
+            {{ encargado.nombre|first|upper }}{{ encargado.apellido|first|upper }}
+
+        </div>
+
+        <div>
+
+            <div class="flex items-center gap-3">
+
+                <h1 class="text-2xl font-bold text-slate-900">
+                    {{ encargado.apellido }}, {{ encargado.nombre }}
+                </h1>
+
+                {% if encargado.activo %}
+
+                    <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                        Activo
+                    </span>
+
+                {% else %}
+
+                    <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+                        Inactivo
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Encargado de vehículos municipales
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="flex gap-2">
+
+        <a
+            href="{% url 'editar_encargado' encargado.id %}"
+            class="rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700"
+        >
+            Editar
+        </a>
+
+        {% if encargado.activo %}
+
+            <a
+                href="{% url 'dar_de_baja_encargado' encargado.id %}"
+                class="rounded-lg border border-red-200 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+            >
+                Dar de baja
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<!-- DATOS PERSONALES -->
+
+<div class="mb-8 rounded-xl border border-black bg-white p-6 shadow-sm">
+
+    <h2 class="mb-5 text-lg font-bold text-slate-900">
+        Datos del encargado
+    </h2>
+
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Nombre
+            </p>
+
+            <p class="mt-1 text-sm font-medium text-slate-900">
+                {{ encargado.nombre }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Apellido
+            </p>
+
+            <p class="mt-1 text-sm font-medium text-slate-900">
+                {{ encargado.apellido }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                DNI
+            </p>
+
+            <p class="mt-1 text-sm font-medium text-slate-900">
+                {{ encargado.dni }}
+            </p>
+        </div>
+
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                N° de legajo
+            </p>
+
+            <p class="mt-1 text-sm font-medium text-slate-900">
+                {{ encargado.legajo }}
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- VEHÍCULO ACTUAL -->
+
+<div class="mb-8 rounded-xl border border-black bg-white shadow-sm">
+
+    <div class="border-b border-slate-200 px-6 py-5">
+
+        <h2 class="text-lg font-bold text-slate-900">
+            Vehículos actualmente asignados
+        </h2>
+
+        <p class="mt-1 text-sm text-slate-500">
+            Vehículos de los que actualmente es responsable.
+        </p>
+
+    </div>
+
+
+    {% if asignaciones_actuales %}
+
+        <div class="overflow-x-auto">
+
+            <table class="min-w-full divide-y divide-slate-200">
+
+                <thead class="bg-slate-50">
+
+                    <tr>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Dominio
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Vehículo
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Desde
+                        </th>
+
+                        <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Acción
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody class="divide-y divide-slate-100">
+
+                    {% for asignacion in asignaciones_actuales %}
+
+                        <tr class="hover:bg-slate-50">
+
+                            <td class="px-6 py-4 text-sm font-bold text-slate-900">
+                                {{ asignacion.vehiculo.dominio }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ asignacion.vehiculo.marca }}
+                                {{ asignacion.vehiculo.modelo }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ asignacion.fecha_desde|date:"d/m/Y" }}
+                            </td>
+
+                            <td class="px-6 py-4 text-right">
+
+                                <a
+                                    href="{% url 'detalle_vehiculo' asignacion.vehiculo.id %}"
+                                    class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                                >
+                                    Ver vehículo
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="px-6 py-10 text-center">
+
+            <p class="text-sm font-medium text-slate-600">
+                Actualmente no tiene vehículos asignados.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<!-- HISTORIAL -->
+
+<div class="rounded-xl border border-black bg-white shadow-sm">
+
+    <div class="border-b border-slate-200 px-6 py-5">
+
+        <h2 class="text-lg font-bold text-slate-900">
+            Historial de vehículos
+        </h2>
+
+        <p class="mt-1 text-sm text-slate-500">
+            Vehículos que estuvieron asignados anteriormente.
+        </p>
+
+    </div>
+
+
+    {% if asignaciones_historicas %}
+
+        <div class="overflow-x-auto">
+
+            <table class="min-w-full divide-y divide-slate-200">
+
+                <thead class="bg-slate-50">
+
+                    <tr>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Dominio
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Vehículo
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Desde
+                        </th>
+
+                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Hasta
+                        </th>
+
+                        <th class="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            Acción
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody class="divide-y divide-slate-100">
+
+                    {% for asignacion in asignaciones_historicas %}
+
+                        <tr class="hover:bg-slate-50">
+
+                            <td class="px-6 py-4 text-sm font-bold text-slate-900">
+                                {{ asignacion.vehiculo.dominio }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ asignacion.vehiculo.marca }}
+                                {{ asignacion.vehiculo.modelo }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ asignacion.fecha_desde|date:"d/m/Y" }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-slate-700">
+                                {{ asignacion.fecha_hasta|date:"d/m/Y" }}
+                            </td>
+
+                            <td class="px-6 py-4 text-right">
+
+                                <a
+                                    href="{% url 'detalle_vehiculo' asignacion.vehiculo.id %}"
+                                    class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                                >
+                                    Ver vehículo
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    {% else %}
+
+        <div class="px-6 py-10 text-center">
+
+            <p class="text-sm text-slate-500">
+                No existen asignaciones históricas.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

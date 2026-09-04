@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Dar de baja encargado | Gestión Vehicular
+{% endblock %}
+
+{% block content %}
+
+<div class="mx-auto max-w-2xl">
+
+    <div class="mb-8">
+
+        <a
+            href="{% url 'detalle_encargado' encargado.id %}"
+            class="text-sm font-medium text-blue-600 hover:text-blue-700"
+        >
+            ← Volver al encargado
+        </a>
+
+        <h1 class="mt-4 text-3xl font-bold tracking-tight text-slate-900">
+            Dar de baja encargado
+        </h1>
+
+    </div>
+
+
+    <div class="rounded-xl border border-black bg-white p-6 shadow-sm">
+
+        <div class="flex gap-4">
+
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+
+                !
+
+            </div>
+
+            <div>
+
+                <h2 class="text-lg font-bold text-slate-900">
+                    ¿Dar de baja a {{ encargado.nombre }} {{ encargado.apellido }}?
+                </h2>
+
+                <p class="mt-2 text-sm leading-6 text-slate-600">
+
+                    El encargado no será eliminado del sistema.
+                    Sus datos y su historial de asignaciones se conservarán.
+
+                </p>
+
+                <div class="mt-4 rounded-lg bg-slate-50 p-4">
+
+                    <p class="text-sm text-slate-700">
+
+                        <strong>DNI:</strong>
+                        {{ encargado.dni }}
+
+                    </p>
+
+                    <p class="mt-1 text-sm text-slate-700">
+
+                        <strong>Legajo:</strong>
+                        {{ encargado.legajo }}
+
+                    </p>
+
+                </div>
+
+                <p class="mt-4 text-sm text-red-600">
+
+                    Las asignaciones actuales de vehículos serán cerradas y
+                    esos vehículos quedarán sin encargado actual.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form method="post" class="mt-8 flex justify-end gap-3">
+
+            {% csrf_token %}
+
+            <a
+                href="{% url 'detalle_encargado' encargado.id %}"
+                class="rounded-lg border border-black px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+                Cancelar
+            </a>
+
+            <button
+                type="submit"
+                class="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
+            >
+                Confirmar baja
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}
